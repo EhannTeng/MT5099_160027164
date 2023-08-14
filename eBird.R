@@ -24,10 +24,6 @@ library(caret)
 library(Kendall)
 set.seed(27164)
 
-comcuc_data <- read.csv("ebd_GB_comcuc_200201_202212_relMar-2023_uk_apr_jun_2002_2022_processed.txt")
-comcuc_data
-eurgol_data <- read.csv("ebd_GB_eurgol_200201_202212_relMar-2023_uk_apr_jun_2002_2022_processed.txt")
-eurgol_data
 goldcrest_data <- read.csv("ebd_GB_goldcr1_200201_202212_relApr-2023_uk_jan_dec_2002_2022_processed.txt")
 goldcrest_data
 checklist_lc <- read.csv("checklist_landcover.csv")
@@ -109,38 +105,11 @@ for (i in 1:len){
 }
 na
 
-# Replace NA of distance walked with mean distance
-goldcrest_data$effort_distance_km <- replace_na(goldcrest_data$effort_distance_km, 
-           mean(goldcrest_data$effort_distance_km, na.rm = TRUE))
-
-sum(is.na(goldcrest_data$effort_distance_km) == TRUE)
-
-# Calculate mean speed using mean distance and mean duration
-time <- mean(goldcrest_data$duration_minutes, na.rm = TRUE)
-dist <- mean(goldcrest_data$effort_distance_km)
-speed <- dist/time
-
-# Replace NA duration with minutes using distance/average speed
-na3 <- which(is.na(goldcrest_data$duration_minutes)==TRUE)
-for (i in na3){
-  goldcrest_data$duration_minutes[i] <- goldcrest_data$effort_distance_km[i]/speed
-}
-
-sum(is.na(goldcrest_data$duration_minutes) == TRUE)
-
-# Replace NA time start using mode
+# Create function for mode
 Mode <- function(x) {
   ux <- na.omit(unique(x))
   tab <- tabulate(match(x, ux)); ux[tab == max(tab) ]
 }
-median(goldcrest_data$time_observations_started_decimal, na.rm = TRUE)
-goldcrest_data$time_observations_started <- replace_na(goldcrest_data$time_observations_started,
-                                                       "11:12:00")
-goldcrest_data$time_observations_started_decimal <- replace_na(goldcrest_data$time_observations_started_decimal,
-                                                       11.2)
-
-sum(is.na(goldcrest_data$time_observations_started) == TRUE)
-sum(is.na(goldcrest_data$time_observations_started_decimal) == TRUE)
 
 # Replace NA in number of observer with mode
 mean(goldcrest_data$number_observers, na.rm = TRUE)
