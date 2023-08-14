@@ -24,14 +24,17 @@ library(caret)
 library(Kendall)
 set.seed(27164)
 
-goldcrest_data <- read.csv("ebd_GB_goldcr1_200201_202212_relApr-2023_uk_jan_dec_2002_2022_processed.txt")
-goldcrest_data
-checklist_lc <- read.csv("checklist_landcover.csv")
-all_lc <- read.csv("all_locations_landcover.csv")
+## Load csv
+# goldcrest_data <- read.csv("ebd_GB_goldcr1_200201_202212_relApr-2023_uk_jan_dec_2002_2022_processed.txt")
+# goldcrest_data
+# checklist_lc <- read.csv("checklist_landcover.csv")
+# all_lc <- read.csv("all_locations_landcover.csv")
 
-# Merge checklist with goldcrest
-goldcrest_data <- merge(goldcrest_data, checklist_lc, by = "checklist_id")
+## Merge checklist with goldcrest
+# goldcrest_data <- merge(goldcrest_data, checklist_lc, by = "checklist_id")
 
+# Load Data
+load("goldcrestdata.RData")
 summary(goldcrest_data)
 par(mfrow = c(1,1))
 # Find columns with NA value
